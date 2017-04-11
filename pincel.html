@@ -1,0 +1,51 @@
+<canvas width="600" height="400"></canvas>
+<br>
+Escolha uma cor <input type="color">
+<br>
+<button>Limpar Tela</button>
+
+<script>
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+    var desenha = false
+    var paleta = document.querySelector("input");
+    var btnlimpa = document.querySelector("button");
+
+    pincel.fillStyle = 'grey';
+    pincel.fillRect(0, 0, 600, 400);
+
+    function desenhaCirculo(evento) {
+
+        if (desenha){
+            var x = evento.pageX - tela.offsetLeft;
+            var y = evento.pageY - tela.offsetTop;
+            pincel.fillStyle = paleta.value;
+            pincel.beginPath();
+            pincel.arc(x, y, 5, 0, 2 * 3.14);
+            pincel.fill();
+            console.log(x + ',' + y);
+        }
+
+    }
+
+    function mouseDown(){
+        console.log("mouseDown");
+        desenha = true;
+    }
+
+    function mouseUp(){
+        console.log("mouseUp");
+        desenha = false;
+    }
+
+    function limpaTela(){
+        pincel.fillStyle = 'grey';
+        pincel.fillRect(0, 0, 600, 400);
+    }
+    
+    tela.onmousemove = desenhaCirculo;
+    tela.onmousedown = mouseDown;
+    tela.onmouseup = mouseUp;
+    btnlimpa.onclick = limpaTela;
+
+</script>
